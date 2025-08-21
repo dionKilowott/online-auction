@@ -28,8 +28,8 @@ class AuthController extends Controller
         if(Auth::attempt($validated)){ // Attempt to log in the user with the provided credentials
         
             $request->session()->regenerate(); // Regenerate the session to prevent fixation
-        
-            return redirect()->route('home');
+
+            return redirect()->route('dashboard');
         }
         throw ValidationException::withMessages([
             'credentials' => 'sorry, incorrect credentials'
@@ -61,7 +61,7 @@ class AuthController extends Controller
         $request->session()->invalidate(); // Invalidate the session
         $request->session()->regenerateToken(); // Regenerate the CSRF token
 
-        return redirect()->route('home');
+        return redirect()->route('login');
     }
 
 }

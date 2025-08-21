@@ -13,19 +13,23 @@ class DashboardController extends Controller
     {
         $user = Auth::user(); //Gets the authenticated user, Auth is part of inbuilt Laravel functionality
 
-        // All bids by the user, with related auction
+        // Only winning bids for dashboard (compact view)
         $myBids = Bid::with('auction')
             ->where('user_id', $user->id)
+            ->whereRaw('bid_amount = (
+                SELECT MAX(bid_amount) 
+                FROM bids b2 
+                WHERE b2.auction_id = bids.auction_id
+            )')
             ->latest()
+            ->take(5) // limit to 5 for dashboard preview
             ->get();
 
-        // Simple static notifications (can be dynamic later)
+        // Example static notifications
         $notifications = [
             ['message' => 'Welcome back, ' . $user->name . '!'],
         ];
 
         return view('dashboard.index', compact('user', 'myBids', 'notifications'));
     }
-
 }
-//test 

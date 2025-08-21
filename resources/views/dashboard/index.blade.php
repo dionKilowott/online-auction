@@ -40,24 +40,34 @@
                 </div>
             </div>
 
-            <!-- My Bids -->
+           <!-- My Bids -->
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
                     <div class="card-header bg-success text-white fw-bold">
-                        My Bids
+                        My Winning Bids
                     </div>
                     <div class="card-body">
                         @forelse($myBids as $bid)
                             <div class="mb-3 border-bottom pb-2">
-                                <h6 class="fw-bold">{{ $bid->auction->item_name }}</h6>
-                                <p class="mb-0 text-muted">My Bid: ${{ $bid->bid_amount }}</p>
+                                <h6 class="fw-bold">
+                                    {{ $bid->auction->item_name }}
+                                </h6>
+                                <p class="mb-1 text-muted">My Winning Bid: ${{ $bid->bid_amount }}</p>
+                                <span class="badge bg-success">Highest Bid</span>
                             </div>
                         @empty
-                            <p class="text-muted">You haven’t placed any bids yet.</p>
+                            <p class="text-muted">No winning bids yet.</p>
                         @endforelse
+
+                        <div class="text-center mt-3">
+                            <a href="{{ route('bids.my') }}" class="btn btn-outline-success btn-sm">
+                                View All My Bids
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
             <!-- Notifications -->
             <div class="col-md-4">
