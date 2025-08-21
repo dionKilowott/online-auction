@@ -26,6 +26,6 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact('user', 'myBids', 'notifications'));
     }
+
 }
-//test
- 
+//test 
