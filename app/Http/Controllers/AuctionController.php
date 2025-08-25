@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Auction;
 use App\Models\Bid;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\AuctionCreatedNotification;
 
 class AuctionController extends Controller
 {
@@ -28,7 +30,8 @@ class AuctionController extends Controller
             'end_time' => 'required|date|after:start_time',
         ]);
 
-        Auction::create([
+        // create auction
+        $auction = Auction::create([
             'item_name' => $request->item_name,
             'description' => $request->description,
             'starting_price' => $request->starting_price,
@@ -37,6 +40,11 @@ class AuctionController extends Controller
             'end_time' => $request->end_time,
             'status' => 'active',
         ]);
+
+        // 🔔 Notify all users about the new auction
+        User::all()->each(function ($user) use ($auction) {
+            $user->notify(new AuctionCreatedNotification($auction));
+        });
 
         return redirect()->route('auctions.index')->with('success', 'Auction created successfully!');
     }

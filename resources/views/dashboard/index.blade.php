@@ -70,27 +70,53 @@
 
 
             <!-- Notifications -->
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-header bg-warning text-dark fw-bold">
-                        Notifications
-                    </div>
-                    <div class="card-body">
-                        @forelse($notifications as $note)
-                            <div class="mb-2 border-bottom pb-2">
-                                {{ $note['message'] }}
-                            </div>
-                        @empty
-                            <p class="text-muted">No notifications yet.</p>
-                        @endforelse
-                    </div>
+            <!-- Notifications -->
+<div class="col-md-4">
+    <div class="card shadow-sm h-100">
+        <div class="card-header bg-warning text-dark fw-bold d-flex justify-content-between align-items-center">
+            Notifications 
+            <span id="notif-count" class="badge bg-danger">
+                {{ auth()->user()->unreadNotifications->count() }}
+            </span>
+        </div>
+        <div class="card-body" id="notif-list">
+            @forelse($notifications as $note)
+                <div class="mb-2 border-bottom pb-2">
+                    {{ $note['message'] }}
                 </div>
-            </div>
-
+            @empty
+                <p class="text-muted">No notifications yet.</p>
+            @endforelse
         </div>
     </div>
+</div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Laravel Echo / Pusher -->
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script src="{{ mix('js/app.js') }}"></script> 
+
+<script>
+    // Setup Echo instance (usually bootstrapped in resources/js/bootstrap.js)
+    window.Echo.channel('notifications')
+        .listen('.auction.notification', (event) => {
+            console.log("📢 New Notification:", event);
+
+            // Add new notification to the list
+            const notifList = document.getElementById('notif-list');
+            notifList.insertAdjacentHTML('afterbegin', `
+                <div class="mb-2 border-bottom pb-2">
+                    ${event.message}
+                </div>
+            `);
+
+            // Increment counter
+            const notifCount = document.getElementById('notif-count');
+            notifCount.innerText = parseInt(notifCount.innerText) + 1;
+        });
+</script>
+
 </body>
 </html>

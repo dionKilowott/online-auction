@@ -1,6 +1,6 @@
-import Echo from 'laravel-echo';
+import Echo from "laravel-echo";
+import Pusher from "pusher-js";
 
-import Pusher from 'pusher-js';
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
@@ -8,8 +8,11 @@ window.Echo = new Echo({
     key: import.meta.env.VITE_PUSHER_APP_KEY,
     cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER,
     forceTLS: true,
-    wsHost: import.meta.env.VITE_PUSHER_HOST,
-    wsPort: import.meta.env.VITE_PUSHER_PORT,
-    wssPort: import.meta.env.VITE_PUSHER_PORT,
-    enabledTransports: ["ws", "wss"],
 });
+
+// Listen for auction created events
+window.Echo.channel("public-auctions")
+    .listen(".auction.created", (event) => {
+        console.log("📢 New Auction:", event.message);
+        alert(event.message); // just for testing
+    });

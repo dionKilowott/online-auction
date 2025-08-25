@@ -7,6 +7,7 @@ use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\BidController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Authentication Routes
