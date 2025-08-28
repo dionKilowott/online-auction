@@ -55,6 +55,7 @@
                         @empty
                             <p class="text-muted">You haven’t placed any bids yet.</p>
                         @endforelse
+                        <a href="{{ route('bids.index') }}" class="btn btn-primary">View All Bids</a>
                     </div>
                 </div>
             </div>

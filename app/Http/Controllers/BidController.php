@@ -40,4 +40,11 @@ class BidController extends Controller
 
         return redirect()->route('auctions.index')->with('success', 'Bid placed successfully!');
     }
+
+    public function index() //view all bids
+    {
+        $bids = Bid::with('auction')->where('user_id', Auth::id())->get();
+        return view('dashboard.bids', compact('bids'));
+    }
+
 }

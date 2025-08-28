@@ -52,4 +52,5 @@ Route::middleware('auth')->group(function () {
         ->name('auctions.store');
     Route::post('/auctions/{auction}/bid', [BidController::class, 'placeBid'])
         ->name('auctions.bid');
+    Route::get('/bids', [BidController::class, 'index'])->name('bids.index');
 });

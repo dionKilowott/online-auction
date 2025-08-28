@@ -65,7 +65,7 @@
         </div>
 
         <!-- Active Auctions -->
-        <h2 class="mb-4 fw-bold">🛒 Active Auctions</h2>
+        <h2 class="mb-4 fw-bold">Active Auctions</h2>
         <div class="row g-4">
             @forelse($auctions as $auction)
                 <div class="col-md-4">
