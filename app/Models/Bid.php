@@ -2,12 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Bid extends Model
 {
-    use HasFactory;
+ 
 
     protected $fillable = [
         'user_id',
@@ -15,13 +14,11 @@ class Bid extends Model
         'bid_amount',
     ];
 
-    // A bid belongs to an auction
     public function auction()
     {
         return $this->belongsTo(Auction::class);
     }
 
-    // A bid belongs to a user
     public function user()
     {
         return $this->belongsTo(User::class);
