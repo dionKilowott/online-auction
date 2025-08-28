@@ -1,21 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuctionController;
-
+use App\Http\Controllers\BidController;
 /*
 |--------------------------------------------------------------------------
 | Public Routes
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-    return view('welcome');
+    return Auth::check()
+        ? redirect()->route('dashboard')    // if logged in → dashboard
+        : redirect()->route('login');       // if not logged in → login page
 });
 
 Route::get('/home', function () {
-    return view('welcome');
+    return redirect()->route('dashboard'); // always redirect to dashboard
 })->name('home');
 
 /*
@@ -38,15 +41,15 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 */
 Route::middleware('auth')->group(function () {
     
-    // Dashboard → loads resources/views/dashboard/index.blade.php
+    // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    // Auctions → loads resources/views/dashboard/auctions.blade.php
+    // Auctions
     Route::get('/auctions', [AuctionController::class, 'index'])
-        ->name('auctions.index');   // ✅ consistent with Blade folder
+        ->name('auctions.index');
     Route::post('/auctions', [AuctionController::class, 'store'])
         ->name('auctions.store');
-    Route::post('/auctions/{auction}/bid', [AuctionController::class, 'placeBid'])
+    Route::post('/auctions/{auction}/bid', [BidController::class, 'placeBid'])
         ->name('auctions.bid');
 });
