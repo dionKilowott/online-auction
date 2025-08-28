@@ -80,8 +80,20 @@
                             <form method="POST" action="{{ route('auctions.bid', $auction->id) }}">
                                 @csrf
                                 <div class="input-group">
-                                    <input type="number" step="0.01" name="bid_amount" class="form-control" placeholder="Enter your bid">
-                                    <button type="submit" class="btn btn-primary">Place Bid</button>
+                                    <input 
+                                        type="number" 
+                                        step="0.01" 
+                                        name="bid_amount" 
+                                        class="form-control" 
+                                        placeholder="Enter your bid"
+                                    >
+
+                                    <button 
+                                        type="submit" 
+                                        class="btn btn-primary">
+                                        Place Bid
+                                    </button>
+
                                 </div>
                             </form>
                         </div>

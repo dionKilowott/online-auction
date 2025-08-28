@@ -16,7 +16,7 @@ class DashboardController extends Controller
         // All bids by the user, with related auction
         $myBids = Bid::with('auction')
             ->where('user_id', $user->id)
-            ->latest()
+            ->whereRaw('bid_amount = (SELECT MAX(bid_amount) FROM bids WHERE auction_id = bids.auction_id)')
             ->get();
 
         // Simple static notifications (can be dynamic later)

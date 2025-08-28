@@ -12,7 +12,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}">⚖️ Auction System</a>
+            <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}">Auction System</a>
             <div class="d-flex">
                 <span class="text-white me-3">{{ auth()->user()->name  }}</span>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
