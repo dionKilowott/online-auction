@@ -22,7 +22,7 @@ class DashboardController extends Controller
 
         // Simple static notifications (can be dynamic later)
         $notifications = [
-            ['message' => 'Welcome back, ' . $user->name . '!'],
+            /*['message' => 'Welcome back, ' . $user->name . '!'],*/
         ];
 
         return view('dashboard.index', compact('user', 'myBids', 'notifications'));

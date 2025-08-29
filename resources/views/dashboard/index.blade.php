@@ -6,6 +6,9 @@
     <title>Auction Dashboard</title>
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
+
 </head>
 <body class="bg-light">
 
@@ -66,14 +69,12 @@
                     <div class="card-header bg-warning text-dark fw-bold">
                         Notifications
                     </div>
-                    <div class="card-body">
-                        @forelse($notifications as $note)
-                            <div class="mb-2 border-bottom pb-2">
-                                {{ $note['message'] }}
-                            </div>
-                        @empty
-                            <p class="text-muted">No notifications yet.</p>
-                        @endforelse
+                    <div class="card-body"></div>
+                        <ul id="notifications">
+                            @foreach($notifications as $note)
+                                <li>{{ $note['message'] }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                 </div>
             </div>
